@@ -1,1 +1,1 @@
-
+The purpose of this lab is to configure the autograder for the upcoming laboratories and understand the structure.
