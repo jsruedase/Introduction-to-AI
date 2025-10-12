@@ -1,0 +1,52 @@
+### 1. Variables ($\mathbf{V}$)
+Son los elementos a los que buscamos asignar un valor o estado aceptable.
+* **En el Coloreo de Mapas:** Las variables son las **regiones, estados o territorios** individuales del mapa que deben ser coloreados.
+
+### 2. Dominios ($\mathbf{D}$)
+Son el conjunto de todos los **valores posibles** que una variable puede tomar.
+* **En el Coloreo de Mapas:** El dominio es el conjunto de **colores** disponibles para la asignación (p. ej., $D = \{ \text{Rojo, Verde, Azul, Amarillo} \}$). En este caso, el dominio es típicamente el mismo para todas las variables.
+
+### 3. Restricciones ($\mathbf{C}$)
+Son las condiciones que **no deben ser violadas** por la asignación de valores a las variables. Estas definen la relación entre las variables.
+* **En el Coloreo de Mapas:** La restricción principal es que **dos estados que compartan una frontera común no pueden tener el mismo color**. Formalmente, si $V_i$ y $V_j$ son variables adyacentes, entonces $V_i \neq V_j$.
+
+El objetivo final de un CSP es encontrar una **asignación consistente** y **completa** de valores (colores) a todas las variables (regiones) de manera que se satisfagan todas las restricciones.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Definición de Estados
+
+En el contexto de los CSPs, los estados se definen por las **asignaciones de valores realizadas hasta el momento** a las variables.
+
+* **Estados (Nodos):** Una asignación **parcial** de valores a un subconjunto de variables.
+    * *Ejemplo:* $\left\{ \text{WA: Rojo, NT: Verde} \right\}$
+
+## Componentes del Proceso de Búsqueda
+
+Para aplicar un algoritmo de búsqueda (como el *backtracking*) al CSP, definimos los siguientes componentes:
+
+| Componente | Definición en CSP |
+| :--- | :--- |
+| **Estado Inicial** | La **asignación vacía** $\left\{ \right\}$, donde ninguna variable ha sido asignada. |
+| **Función de Sucesor** | Generar un nuevo estado al **asignar un valor** a una variable que **aún no ha sido asignada**. |
+| **Prueba de Objetivo** | La asignación actual es **completa** (todas las variables tienen un valor) y **satisface todas las restricciones** del problema. |
+
+---
+
+## Enfoque de Implementación
+
+Comenzaremos implementando una estrategia de búsqueda **ingenua (*naïve*) y directa** (*straightforward*), basada en el **algoritmo recursivo de *backtracking***.
+
+Posteriormente, introduciremos **heurísticas y técnicas de inferencia** más avanzadas (como *Minimum Remaining Values* o *Forward Checking*) para mejorar drásticamente la eficiencia de la búsqueda.
