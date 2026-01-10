@@ -28,9 +28,26 @@ def train_perceptron(model, dataset):
     Each sample in the dataloader is in the form {'x': features, 'label': label} where label
     is the item we need to predict based off of its features.
     """
+    #print(dataset)
     with no_grad():
         dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
         "*** YOUR CODE HERE ***"
+        acc = 0
+        while acc != len(dataset): # Given by the task, we know that it exists a solution that perfectly classifies the data
+            acc = 0
+            for batch in dataloader:
+                x = batch['x']
+                y = batch['label']
+                
+                # y_pred = model(x)
+                #print("x:", x, "x.squeeze():", x.squeeze(), "y:", y, "y_pred:", y_pred)
+                model_output = model.get_prediction(x)
+                if model_output != y:
+                    model.w += y * x.squeeze() # Tweak weights so that the output is correct next time
+                else:
+                    acc += 1
+                    #print(acc)
+                    
 
 
 def train_regression(model, dataset):
