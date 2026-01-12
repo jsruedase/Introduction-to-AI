@@ -138,7 +138,26 @@ class DigitClassificationModel(Module):
         input_size = 28 * 28
         output_size = 10
         "*** YOUR CODE HERE ***"
-
+        """ 
+        Intentado: 
+        1x784 x 784x784 = 1x784 x 784x784 = 1x784 x 784x10 = 1x10
+        1x784 x 784x784 = 1x784 x 784x784 = 1x784 x 784x784 = 1x784 x 784x10 = 1x10 90% medio estable
+        1x10 x 10x10 = 1x10 x 10x10 = 1x10 x 10x10 = 1x10 x 10x10 = 1x10 BASURA
+        1x784 x 784x10 = 1x10 90% sorprendentemente con lr 0.001
+        1x784 x 784x784 = 1x784 x 784x10 = 1x10 97.5 alcanzado cambiando lr a 0.005 y batch size a 64
+        aparentemente son parámetros más fuertes. Aunque de pronto está haciendo overfit. xd
+        Segun el chat es simplemente logits altos. Cambiar a multiplícar por 0.01 para bajar la escala
+        y bajar el batch size a 64 y el lr a 0.001. Con esto en 6 epochs ya está en 97.5% y se ven mejor los valores.
+        """
+        self.w1 = Parameter(torch.randn(input_size, 128) * 0.01)
+        self.b1 = Parameter(zeros(1,128))
+        self.w2 = Parameter(torch.randn(128, output_size) * 0.01)
+        self.b2 = Parameter(zeros(1, output_size))
+        # self.w3 = Parameter(torch.randn(input_size, output_size))
+        # self.b3 = Parameter(zeros(1,output_size))
+        # self.w4 = Parameter(torch.randn(input_size, output_size))
+        # self.b4 = Parameter(zeros(1, output_size))
+        self.activation = torch.relu
 
     def forward(self, x):
         """
@@ -155,6 +174,14 @@ class DigitClassificationModel(Module):
                 (also called logits)
         """
         """ YOUR CODE HERE """
+        z1 = x @ self.w1 + self.b1
+        a1 = self.activation(z1)
+        z2 = a1 @ self.w2 + self.b2
+        # a2 = self.activation(z2)
+        # z3 = a2 @ self.w3 + self.b3
+        # a3 = self.activation(z3)
+        # y_hat = a3 @ self.w4 + self.b4
+        return z2
 
 
 
